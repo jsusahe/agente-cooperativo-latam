@@ -1,1 +1,78 @@
-.
+name: Agente de Noticias Cooperativas Latinoamericanas
+
+on:
+  schedule:
+    # Ejecuta a las 7:00 AM UTC (2:00 AM Colombia)
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-agent:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Restaurar cookies de YouTube
+        if: secrets.YOUTUBE_COOKIES != ''
+        run: |
+          echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
+          echo "✅ cookies.txt creado."
+
+      - name: Restaurar token de Google Drive
+        if: secrets.DRIVE_TOKEN_JSON != ''
+        run: |
+          echo "${{ secrets.DRIVE_TOKEN_JSON }}" | base64 -d > token.json
+          echo "✅ token.json creado."
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar Agente Cooperativo
+        run: python main.py
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          PARENT_FOLDER_ID: ${{ secrets.PARENT_FOLDER_ID }}
+          DRIVE_TOKEN_JSON: ${{ secrets.DRIVE_TOKEN_JSON }}
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+
+      - name: Subir artefacto para GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./
+
+  deploy-pages:
+    needs: build-agent
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
