@@ -1,0 +1,18 @@
+# Core dependencies
+requests>=2.31.0
+python-dotenv>=1.0.0
+
+# RSS & Web Scraping
+feedparser>=6.0.10
+beautifulsoup4>=4.12.2
+lxml>=4.9.3
+
+# AI & Summarization
+edge-tts>=6.1.9
+
+# YouTube (optional)
+yt-dlp>=2024.8.6
+
+# Google Drive (optional)
+google-api-python-client>=2.108.0
+google-auth-oauthlib>=1.2.0
