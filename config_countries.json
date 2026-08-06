@@ -1,0 +1,77 @@
+{
+  "countries": [
+    {
+      "name": "Colombia",
+      "code": "CO",
+      "sources": {
+        "supervision": [
+          {
+            "name": "Superintendencia de Economia Solidaria",
+            "url": "https://www.supersolidaria.gov.co/",
+            "type": "website",
+            "rss": "https://www.supersolidaria.gov.co/es/rss.xml"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "Confecoop Nacional",
+            "url": "https://confecoop.coop/",
+            "type": "website",
+            "rss": "https://confecoop.coop/feed/"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Panama",
+      "code": "PA",
+      "sources": {
+        "supervision": [
+          {
+            "name": "IPACOOP",
+            "url": "https://ipacoop.gob.pa/",
+            "type": "website",
+            "rss": "https://ipacoop.gob.pa/feed/"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Costa Rica",
+      "code": "CR",
+      "sources": {
+        "supervision": [
+          {
+            "name": "INFOCOOP",
+            "url": "https://www.infocoop.go.cr/",
+            "type": "website",
+            "rss": "https://www.infocoop.go.cr/feed/"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Republica Dominicana",
+      "code": "DO",
+      "sources": {
+        "media": [
+          {
+            "name": "El Cooperador Digital",
+            "url": "https://elcooperadordigital.com/",
+            "type": "website",
+            "rss": "https://elcooperadordigital.com/feed/"
+          }
+        ]
+      }
+    }
+  ],
+  "latam_sources": [],
+  "settings": {
+    "min_news_per_country": 2,
+    "max_news_per_source": 1,
+    "days_back": 3,
+    "max_history_days": 30,
+    "timeout": 10,
+    "max_retries": 1
+  }
+}
