@@ -32,6 +32,17 @@ jobs:
         with:
           deno-version: v2.x
 
+      # ============================================
+      # NUEVO: Configurar SSL para sitios problemáticos
+      # ============================================
+      - name: Configurar SSL y certificados
+        run: |
+          echo "🔐 Configurando SSL..."
+          sudo apt-get update
+          sudo apt-get install -y ca-certificates
+          python -c "import ssl; print(f'SSL version: {ssl.OPENSSL_VERSION}')"
+          echo "✅ SSL configurado"
+
       - name: Verificar Secrets
         run: |
           echo "🔍 Verificando configuración..."
@@ -67,7 +78,9 @@ jobs:
           ls -la
           echo ""
           echo "📁 Verificando archivos críticos:"
-          FILES=("main.py" "config_countries.json" "requirements.txt" "cooperative_fetcher.py")
+          FILES=("main.py" "config_countries.json" "requirements.txt" 
+                 "cooperative_fetcher.py" "cooperative_processor.py" 
+                 "summary_generator_coop.py" "document_generator_coop.py")
           for file in "${FILES[@]}"; do
             if [ -f "$file" ]; then
               echo "✅ $file encontrado"
@@ -90,6 +103,9 @@ jobs:
           echo "📦 Dependencias instaladas:"
           pip list
 
+      # ============================================
+      # NUEVO: Ejecutar con variables SSL
+      # ============================================
       - name: Ejecutar Agente Cooperativo
         run: python main.py
         env:
@@ -98,15 +114,33 @@ jobs:
           PARENT_FOLDER_ID: ${{ secrets.PARENT_FOLDER_ID }}
           DRIVE_TOKEN_JSON: ${{ secrets.DRIVE_TOKEN_JSON }}
           YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          # 🔑 Deshabilitar verificación SSL para sitios problemáticos
+          PYTHONHTTPSVERIFY: 0
+          # 🔑 Configurar timeout más largo
+          REQUESTS_TIMEOUT: 60
 
       - name: Verificar archivos generados
         run: |
           echo "📁 Archivos generados:"
           ls -la
+          echo ""
+          echo "📁 Verificando archivos de salida:"
           if [ -f "index.html" ]; then
             echo "✅ index.html generado"
+            echo "📄 Tamaño: $(wc -c < index.html) bytes"
           else
             echo "⚠️ index.html no encontrado"
+          fi
+          if [ -f "resumen_cooperativo.mp3" ]; then
+            echo "✅ resumen_cooperativo.mp3 generado"
+          else
+            echo "ℹ️ resumen_cooperativo.mp3 no generado (opcional)"
+          fi
+          if [ -d "historial_cooperativo" ]; then
+            echo "✅ historial_cooperativo/ creado"
+            echo "📁 Contenido: $(ls -la historial_cooperativo/ | wc -l) archivos"
+          else
+            echo "⚠️ historial_cooperativo/ no encontrado"
           fi
 
       - name: Subir artefacto para GitHub Pages
