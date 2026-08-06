@@ -123,9 +123,7 @@ jobs:
       # ============================================
       # EJECUTAR AGENTE COOPERATIVO CON IA-COOP-LAB
       # ============================================
-      # - name: Ejecutar Agente Cooperativo
-      #   run: python main.py
-        - name: Ejecutar Diagnóstico
+      - name: Ejecutar Diagnóstico
         run: python diagnostic.py
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
