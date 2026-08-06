@@ -1,0 +1,650 @@
+# document_generator_coop.py - VERSIÓN CORREGIDA CON DEBUG
+import json
+import os
+import shutil
+from datetime import datetime
+from typing import Dict, List, Optional
+from audio_generator import generate_audio
+
+
+def generate_cooperative_html(summaries: Dict, output_filename="index.html") -> str:
+    """Genera el HTML del boletín cooperativo con reproductores de audio por país"""
+    
+    date_str = datetime.now().strftime("%A, %d de %B de %Y")
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    
+    html_content = f"""
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletín Cooperativo Latinoamericano - {current_date}</title>
+    <style>
+        * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+        body {{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #2d3748;
+            padding: 20px;
+            line-height: 1.6;
+        }}
+        .container {{
+            max-width: 1200px;
+            margin: 0 auto;
+        }}
+        header {{
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }}
+        header h1 {{
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }}
+        header .subtitle {{
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }}
+        header .date {{
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }}
+        header .badge {{
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }}
+        .country-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }}
+        .country-card {{
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 5px solid #2b6cb0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }}
+        .country-card:hover {{
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }}
+        .country-header {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }}
+        .country-flag {{
+            font-size: 2rem;
+        }}
+        .country-title {{
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }}
+        .country-meta {{
+            font-size: 0.85rem;
+            color: #718096;
+            margin-left: auto;
+        }}
+        .summary-text {{
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #2b6cb0;
+            font-size: 0.95rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }}
+        .summary-text p {{
+            white-space: pre-wrap;
+        }}
+        .audio-player {{
+            background: #edf2f7;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }}
+        .audio-player audio {{
+            flex: 1;
+            min-width: 200px;
+        }}
+        .audio-player .download-link {{
+            font-size: 0.85rem;
+            color: #2b6cb0;
+            text-decoration: none;
+        }}
+        .audio-player .download-link:hover {{
+            text-decoration: underline;
+        }}
+        .news-list {{
+            margin-top: 15px;
+        }}
+        .news-list-title {{
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: block;
+        }}
+        .news-item {{
+            padding: 10px 0;
+            border-bottom: 1px solid #edf2f7;
+        }}
+        .news-item:last-child {{
+            border-bottom: none;
+        }}
+        .news-title {{
+            font-weight: 600;
+            color: #2d3748;
+        }}
+        .news-summary {{
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-top: 3px;
+        }}
+        .news-source {{
+            font-size: 0.8rem;
+            color: #718096;
+            display: block;
+            margin-top: 3px;
+        }}
+        .news-source .badge {{
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }}
+        .badge-supervision {{ background: #e53e3e; color: white; }}
+        .badge-national_association {{ background: #2b6cb0; color: white; }}
+        .badge-regional_association {{ background: #3182ce; color: white; }}
+        .badge-employee_fund {{ background: #38a169; color: white; }}
+        .badge-solidarist {{ background: #d69e2e; color: white; }}
+        .badge-media {{ background: #805ad5; color: white; }}
+        .badge-cooperative {{ background: #6b46c1; color: white; }}
+        .badge-video {{ background: #e53e3e; color: white; }}
+        .badge-guarantee {{ background: #2f855a; color: white; }}
+        .badge-government {{ background: #2c5282; color: white; }}
+        .badge-other {{ background: #a0aec0; color: white; }}
+        
+        .regional-section {{
+            background: linear-gradient(135deg, #fbd38d, #f6ad55);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 2px solid #dd6b20;
+        }}
+        .regional-section h2 {{
+            color: #744210;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+        .regional-section .summary-text {{
+            background: rgba(255,255,255,0.7);
+            border-left-color: #dd6b20;
+        }}
+        .regional-section .audio-player {{
+            background: rgba(255,255,255,0.7);
+        }}
+        .trends {{
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+        }}
+        .trends h4 {{
+            color: #744210;
+            margin-bottom: 8px;
+        }}
+        .trends ul {{
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }}
+        .trends li {{
+            background: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #744210;
+            border: 1px solid #dd6b20;
+        }}
+        .no-news {{
+            color: #718096;
+            font-style: italic;
+            padding: 15px;
+            text-align: center;
+        }}
+        .no-audio {{
+            color: #a0aec0;
+            font-size: 0.85rem;
+            font-style: italic;
+        }}
+        .footer {{
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }}
+        .footer .stats {{
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }}
+        .footer .stat-item {{
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }}
+        @media (max-width: 768px) {{
+            .country-grid {{
+                grid-template-columns: 1fr;
+            }}
+            header h1 {{
+                font-size: 1.8rem;
+            }}
+            .footer .stats {{
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }}
+            .audio-player {{
+                flex-direction: column;
+            }}
+            .audio-player audio {{
+                width: 100%;
+            }}
+        }}
+        .scroll-top {{
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2b6cb0;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.2s;
+        }}
+        .scroll-top:hover {{
+            background: #1a365d;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏢 Boletín Cooperativo Latinoamericano</h1>
+            <div class="subtitle">Noticias del sector cooperativo en la región</div>
+            <div class="date">📅 {date_str}</div>
+            <div class="badge">🔄 Actualización automática diaria</div>
+        </header>
+        
+        <div class="country-grid">
+    """
+    
+    # Procesar cada país
+    country_codes = ['CO', 'PA', 'CR', 'DO']
+    flags = {'CO': '🇨🇴', 'PA': '🇵🇦', 'CR': '🇨🇷', 'DO': '🇩🇴'}
+    country_names = {'CO': 'Colombia', 'PA': 'Panamá', 'CR': 'Costa Rica', 'DO': 'República Dominicana'}
+    
+    for code in country_codes:
+        summary = summaries.get(code, {})
+        country = summary.get('country', country_names.get(code, 'Desconocido'))
+        has_news = summary.get('has_news', False)
+        flag = flags.get(code, '🏳️')
+        
+        # Audio del país
+        country_audio_file = f"audio_{code}_{datetime.now().strftime('%Y-%m-%d')}.mp3"
+        audio_exists = os.path.exists(country_audio_file)
+        
+        html_content += f"""
+            <div class="country-card">
+                <div class="country-header">
+                    <span class="country-flag">{flag}</span>
+                    <span class="country-title">{country}</span>
+                    <span class="country-meta">{summary.get('news_count', 0)} noticias</span>
+                </div>
+        """
+        
+        if has_news:
+            summary_text = summary.get('summary', '')
+            summary_text = summary_text.replace('\n\n', '</p><p>').replace('\n', ' ')
+            
+            html_content += f"""
+                <div class="summary-text">
+                    <p>{summary_text}</p>
+                </div>
+            """
+            
+            # Reproductor de audio del país
+            if audio_exists:
+                html_content += f"""
+                    <div class="audio-player">
+                        <span>🎧 Escuchar resumen de {country}:</span>
+                        <audio controls preload="none">
+                            <source src="{country_audio_file}" type="audio/mpeg">
+                            Tu navegador no soporta audio.
+                        </audio>
+                        <a href="{country_audio_file}" download class="download-link">⬇️ Descargar</a>
+                    </div>
+                """
+            else:
+                html_content += f"""
+                    <div class="audio-player no-audio">
+                        ⚠️ Audio no disponible para {country}
+                    </div>
+                """
+            
+            key_topics = summary.get('key_topics', [])
+            if key_topics:
+                html_content += f"""
+                    <div style="margin: 10px 0;">
+                        <strong>🏷️ Temas destacados:</strong>
+                        <span style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px;">
+                """
+                for topic in key_topics[:4]:
+                    html_content += f'<span style="background: #e2e8f0; padding: 2px 10px; border-radius: 12px; font-size: 0.8rem;">{topic}</span>'
+                html_content += """
+                        </span>
+                    </div>
+                """
+            
+            news_items = summary.get('news_items', [])
+            if news_items:
+                html_content += '<div class="news-list"><span class="news-list-title">📰 Noticias destacadas:</span>'
+                for item in news_items[:5]:
+                    title = item.get('title', 'Sin título')
+                    source = item.get('source_name', 'Fuente desconocida')
+                    category = item.get('source_category', 'other')
+                    summary_text_item = item.get('summary', '')[:200]
+                    link = item.get('link', '#')
+                    
+                    badge_class = f"badge-{category}" if category in ['supervision', 'national_association', 'regional_association', 'employee_fund', 'solidarist', 'media', 'cooperative', 'video', 'guarantee', 'government'] else 'badge-other'
+                    category_display = {
+                        'supervision': 'Supervisión',
+                        'national_association': 'Confederación Nacional',
+                        'regional_association': 'Confederación Regional',
+                        'employee_fund': 'Fondo de Empleados',
+                        'solidarist': 'Solidarista',
+                        'media': 'Medios',
+                        'cooperative': 'Cooperativa',
+                        'video': 'Video',
+                        'guarantee': 'Garantía',
+                        'government': 'Gobierno',
+                        'other': 'General'
+                    }.get(category, 'General')
+                    
+                    html_content += f"""
+                        <div class="news-item">
+                            <div class="news-title">{title}</div>
+                            {f'<div class="news-summary">{summary_text_item}</div>' if summary_text_item else ''}
+                            <span class="news-source">
+                                <span class="badge {badge_class}">{category_display}</span>
+                                📌 {source}
+                                {' <a href="'+link+'" target="_blank" style="color: #2b6cb0;">🔗 Ver fuente</a>' if link and link != '#' else ''}
+                            </span>
+                        </div>
+                    """
+                html_content += '</div>'
+        else:
+            html_content += f"""
+                <div class="no-news">
+                    <p>⚠️ No se encontraron noticias cooperativas para {country} en los últimos días.</p>
+                </div>
+            """
+        
+        html_content += '</div>'
+    
+    # Sección Regional - con verificación de audio
+    regional = summaries.get('REGIONAL', {})
+    if regional.get('has_news'):
+        summary_text = regional.get('summary', '')
+        summary_text = summary_text.replace('\n\n', '</p><p>').replace('\n', ' ')
+        
+        # Verificar audio regional (buscar en múltiples ubicaciones)
+        regional_audio_file = f"resumen_cooperativo_{datetime.now().strftime('%Y-%m-%d')}.mp3"
+        regional_audio_exists = os.path.exists(regional_audio_file) or os.path.exists("resumen_cooperativo.mp3")
+        
+        # 🔍 DEBUG: Mostrar información del audio regional
+        print(f"🔍 Audio regional: {regional_audio_file}")
+        print(f"   Existe en raíz: {os.path.exists(regional_audio_file)}")
+        print(f"   Existe como resumen_cooperativo.mp3: {os.path.exists('resumen_cooperativo.mp3')}")
+        
+        html_content += f"""
+            </div>
+            <div class="regional-section">
+                <h2>🌎 Panorama Regional</h2>
+                <div class="summary-text">
+                    <p>{summary_text}</p>
+                </div>
+        """
+        
+        # Reproductor de audio regional
+        if regional_audio_exists:
+            # Determinar la ruta correcta del audio
+            if os.path.exists(regional_audio_file):
+                audio_src = regional_audio_file
+            else:
+                audio_src = "resumen_cooperativo.mp3"
+            
+            html_content += f"""
+                <div class="audio-player">
+                    <span>🎧 Escuchar resumen regional:</span>
+                    <audio controls preload="none">
+                        <source src="{audio_src}" type="audio/mpeg">
+                        Tu navegador no soporta audio.
+                    </audio>
+                    <a href="{audio_src}" download class="download-link">⬇️ Descargar</a>
+                </div>
+            """
+        else:
+            html_content += f"""
+                <div class="audio-player no-audio">
+                    ⚠️ Audio regional no disponible
+                </div>
+            """
+        
+        trends = regional.get('trends', [])
+        if trends:
+            html_content += f"""
+                <div class="trends">
+                    <h4>📈 Tendencias Regionales</h4>
+                    <ul>
+                        {''.join(f'<li>{t}</li>' for t in trends[:5])}
+                    </ul>
+                </div>
+            """
+        
+        html_content += '</div>'
+    
+    # Calcular estadísticas
+    total_news = sum(s.get('news_count', 0) for s in summaries.values() if isinstance(s, dict) and s.get('has_news'))
+    
+    html_content += f"""
+        
+        <div class="footer">
+            <div class="stats">
+                <span class="stat-item">📰 Total noticias: {total_news}</span>
+                <span class="stat-item">🌎 Países: 4</span>
+                <span class="stat-item">🔄 Actualizado: {datetime.now().strftime('%H:%M:%S')}</span>
+            </div>
+            <p>📊 Generado automáticamente por el <strong>Agente de Noticias Cooperativas</strong></p>
+            <p style="font-size: 0.8rem; margin-top: 10px;">
+                Fuentes: Superintendencias, Confederaciones, Federaciones, Fondos de Empleados y medios especializados
+            </p>
+        </div>
+    </div>
+    
+    <a href="#" class="scroll-top" title="Volver arriba">↑</a>
+</body>
+</html>
+    """
+    
+    with open(output_filename, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print(f"✅ Documento HTML generado: {output_filename}")
+    return output_filename
+
+
+def generate_audio_for_country(country_code: str, country_name: str, summary_text: str) -> Optional[str]:
+    """Genera audio para el resumen de un país"""
+    if not summary_text or len(summary_text) < 50:
+        print(f"⚠️ Texto muy corto para generar audio de {country_name} ({len(summary_text)} caracteres)")
+        return None
+    
+    audio_filename = f"audio_{country_code}_{datetime.now().strftime('%Y-%m-%d')}.mp3"
+    
+    # Limitar texto para audio
+    text_for_audio = summary_text[:4000]
+    
+    # Agregar introducción
+    intro = f"Resumen de noticias cooperativas de {country_name}. "
+    full_text = intro + text_for_audio
+    
+    print(f"  🔊 Generando audio para {country_name} ({len(full_text)} caracteres)...")
+    audio_file = generate_audio(full_text, audio_filename)
+    
+    if audio_file and os.path.exists(audio_file):
+        print(f"    ✅ Audio generado: {audio_file} ({os.path.getsize(audio_file)} bytes)")
+        return audio_file
+    else:
+        print(f"    ❌ Error al generar audio para {country_name}")
+        return None
+
+
+def generate_audio_for_region(regional_summary: str) -> Optional[str]:
+    """Genera audio para el resumen regional"""
+    if not regional_summary or len(regional_summary) < 50:
+        print(f"⚠️ Texto regional muy corto para generar audio ({len(regional_summary)} caracteres)")
+        return None
+    
+    audio_filename = f"resumen_cooperativo_{datetime.now().strftime('%Y-%m-%d')}.mp3"
+    
+    intro = "Resumen regional de noticias cooperativas de Latinoamérica. "
+    full_text = intro + regional_summary[:4000]
+    
+    print(f"  🔊 Generando audio regional ({len(full_text)} caracteres)...")
+    audio_file = generate_audio(full_text, audio_filename)
+    
+    if audio_file and os.path.exists(audio_file):
+        print(f"    ✅ Audio regional generado: {audio_file} ({os.path.getsize(audio_file)} bytes)")
+        # Copiar a la raíz para la web
+        try:
+            shutil.copy(audio_file, "resumen_cooperativo.mp3")
+            print(f"    ✅ Copiado a resumen_cooperativo.mp3")
+        except Exception as e:
+            print(f"    ⚠️ Error al copiar audio regional: {e}")
+        return audio_file
+    else:
+        print(f"    ❌ Error al generar audio regional")
+        return None
+
+
+def generate_cooperative_document(summaries: Dict) -> str:
+    """Genera el documento completo del boletín cooperativo con audios"""
+    date_str = datetime.now().strftime("%Y-%m-%d")
+    filename = f"cooperativo_{date_str}.html"
+    
+    # Generar audios por país
+    print("\n" + "="*60)
+    print("🎧 GENERANDO AUDIOS")
+    print("="*60)
+    
+    audio_files = []
+    
+    # Audios por país
+    print("\n📢 Audios por país:")
+    country_codes = ['CO', 'PA', 'CR', 'DO']
+    for code in country_codes:
+        summary = summaries.get(code, {})
+        if summary.get('has_news') and summary.get('summary'):
+            country = summary.get('country', 'Desconocido')
+            audio_file = generate_audio_for_country(code, country, summary.get('summary', ''))
+            if audio_file:
+                audio_files.append(audio_file)
+    
+    # Audio regional
+    print("\n📢 Audio regional:")
+    regional = summaries.get('REGIONAL', {})
+    if regional.get('has_news') and regional.get('summary'):
+        regional_audio = generate_audio_for_region(regional.get('summary', ''))
+        if regional_audio:
+            audio_files.append(regional_audio)
+    else:
+        print("  ⚠️ No hay resumen regional para generar audio")
+    
+    # Generar HTML
+    print("\n📄 Generando HTML con reproductores de audio...")
+    generate_cooperative_html(summaries, filename)
+    generate_cooperative_html(summaries, "index.html")
+    
+    print(f"\n✅ Documento generado: {filename}")
+    print(f"📁 Audios generados: {len(audio_files)}")
+    for f in audio_files:
+        print(f"   - {f}")
+    
+    return filename
+
+
+if __name__ == '__main__':
+    print("=== PRUEBA DE DOCUMENT_GENERATOR_COOP ===")
+    
+    # Datos de prueba
+    test_data = {
+        'CO': {
+            'country': 'Colombia',
+            'has_news': True,
+            'summary': 'El sector cooperativo colombiano presenta avances significativos en regulación y supervisión. La Superintendencia de Economía Solidaria ha anunciado nuevas directrices para el fortalecimiento del control interno en las cooperativas de ahorro y crédito. Confecoop Nacional reporta un crecimiento del 12% en el sector durante el primer semestre del año, destacando especialmente las cooperativas multiactivas y de trabajo asociado. Se espera que estas medidas impulsen la transparencia y la confianza en el sistema cooperativo colombiano.',
+            'news_count': 8,
+            'key_topics': ['Regulación', 'Crecimiento', 'Innovación'],
+            'news_items': [
+                {'title': 'Nuevas normas para cooperativas financieras', 'source_name': 'Superintendencia de Economía Solidaria', 'source_category': 'supervision', 'link': '#', 'summary': 'La Superintendencia emitió la Circular 15 de 2026...'},
+                {'title': 'Confecoop celebra congreso nacional', 'source_name': 'Confecoop Nacional', 'source_category': 'national_association', 'link': '#', 'summary': 'El evento se realizará en Bogotá del 15 al 17 de octubre...'}
+            ]
+        },
+        'REGIONAL': {
+            'country': 'Latinoamérica',
+            'has_news': True,
+            'summary': 'El cooperativismo latinoamericano muestra un crecimiento sostenido, con innovaciones en inclusión financiera y fortalecimiento de los marcos regulatorios. La región avanza hacia una mayor integración de los sistemas cooperativos, con énfasis en la digitalización y el acceso a servicios financieros para poblaciones vulnerables. Se espera que estas tendencias continúen fortaleciendo el sector en toda la región.',
+            'trends': ['Inclusión financiera', 'Regulación armonizada', 'Transformación digital']
+        }
+    }
+    
+    generate_cooperative_document(test_data)
+    print("✅ Documento de prueba generado")
