@@ -1,0 +1,337 @@
+{
+  "countries": [
+    {
+      "name": "Colombia",
+      "code": "CO",
+      "sources": {
+        "supervision": [
+          {
+            "name": "Superintendencia de Economía Solidaria",
+            "url": "https://www.supersolidaria.gov.co/",
+            "type": "website",
+            "rss": "https://www.supersolidaria.gov.co/es/rss.xml"
+          },
+          {
+            "name": "Superintendencia Financiera",
+            "url": "https://www.superfinanciera.gov.co/",
+            "type": "website"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "Confecoop Nacional",
+            "url": "https://confecoop.coop/",
+            "type": "website",
+            "rss": "https://confecoop.coop/feed/"
+          },
+          {
+            "name": "Fecolfin",
+            "url": "https://www.fecolfin.coop/",
+            "type": "website"
+          },
+          {
+            "name": "Colombia Cooperativa",
+            "url": "https://colombiacooperativa.coop/",
+            "type": "website"
+          }
+        ],
+        "regional_associations": [
+          {
+            "name": "Confecoop Antioquia",
+            "url": "https://confecoopantioquia.coop/",
+            "type": "website"
+          },
+          {
+            "name": "Confecoop Valle",
+            "url": "https://confecoopvalle.com/",
+            "type": "website"
+          },
+          {
+            "name": "Confecoop Atlantico",
+            "url": "https://confecoopatlantico.com/",
+            "type": "website"
+          },
+          {
+            "name": "Confecoop Orinoco",
+            "url": "https://www.confecooporiente.com/",
+            "type": "website"
+          }
+        ],
+        "employee_funds": [
+          {
+            "name": "ANALFE",
+            "url": "https://www.analfe.org.co/",
+            "type": "website",
+            "rss": "https://www.analfe.org.co/feed/"
+          },
+          {
+            "name": "ASCOOP",
+            "url": "https://ascoop.coop/",
+            "type": "website"
+          }
+        ],
+        "insurance_guarantee": [
+          {
+            "name": "FOGACOOP",
+            "url": "https://www.fogacoop.gov.co/",
+            "type": "website"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "Coomeva",
+            "url": "https://www.coomeva.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Coomultrasan",
+            "url": "https://www.coomultrasan.com.co/",
+            "type": "website"
+          }
+        ],
+        "government": [
+          {
+            "name": "Departamento Nacional de Planeacion",
+            "url": "https://www.dnp.gov.co/",
+            "type": "website"
+          },
+          {
+            "name": "Ministerio de Hacienda",
+            "url": "https://www.minhacienda.gov.co/",
+            "type": "website"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Panama",
+      "code": "PA",
+      "sources": {
+        "supervision": [
+          {
+            "name": "IPACOOP",
+            "url": "https://ipacoop.gob.pa/",
+            "type": "website",
+            "rss": "https://ipacoop.gob.pa/feed/"
+          }
+        ],
+        "media": [
+          {
+            "name": "La Voz Cooperativa",
+            "url": "https://lavozcooperativa.com/",
+            "type": "website",
+            "rss": "https://lavozcooperativa.com/feed/"
+          },
+          {
+            "name": "Vision Cooperativa",
+            "url": "https://visioncooperativa.com/",
+            "type": "website"
+          },
+          {
+            "name": "TVN Noticias - Cooperativas",
+            "url": "https://www.tvn-2.com/temas/cooperativas-en-panama/",
+            "type": "website"
+          },
+          {
+            "name": "TVN Noticias - IPACOOP",
+            "url": "https://www.tvn-2.com/temas/ipacoop/",
+            "type": "website"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "Cooperativa Profesionales R.L.",
+            "url": "https://www.cooprofesionales.com.pa/",
+            "type": "website"
+          }
+        ],
+        "government": [
+          {
+            "name": "Ministerio de Economia y Finanzas",
+            "url": "https://www.mef.gob.pa/",
+            "type": "website"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Costa Rica",
+      "code": "CR",
+      "sources": {
+        "supervision": [
+          {
+            "name": "SUGEF",
+            "url": "https://www.sugef.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "INFOCOOP",
+            "url": "https://www.infocoop.go.cr/",
+            "type": "website",
+            "rss": "https://www.infocoop.go.cr/feed/"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "CONACOOP - Consejo Nacional de Cooperativas",
+            "url": "https://conacoop.coop/",
+            "type": "website"
+          },
+          {
+            "name": "FECOOPSE",
+            "url": "https://www.fecoopse.coop/",
+            "type": "website"
+          },
+          {
+            "name": "FEDEAC",
+            "url": "https://www.fedeac.coop/",
+            "type": "website"
+          }
+        ],
+        "solidarist_associations": [
+          {
+            "name": "Solidarismo",
+            "url": "https://www.solidarismo.co.cr/",
+            "type": "website"
+          }
+        ],
+        "media": [
+          {
+            "name": "El Cooperativista CR",
+            "url": "https://www.elcooperativista.cr/",
+            "type": "website"
+          },
+          {
+            "name": "La Nacion - CoopeAlianza",
+            "url": "https://www.nacion.com/etiquetas/CoopeAlianza/",
+            "type": "website"
+          },
+          {
+            "name": "El Financiero CR - CoopeAlianza",
+            "url": "https://www.elfinancierocr.com/etiqueta/coopealianza/",
+            "type": "website"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "COOPENAE",
+            "url": "https://www.coopenae.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "Coopelesca R.L.",
+            "url": "https://coopelesca.com/",
+            "type": "website"
+          },
+          {
+            "name": "Coopealianza",
+            "url": "https://coopealianza.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "COOPESA R.L.",
+            "url": "https://www.coopesa.com/",
+            "type": "website"
+          }
+        ],
+        "government": [
+          {
+            "name": "Ministerio de Hacienda",
+            "url": "https://www.hacienda.go.cr/",
+            "type": "website"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Republica Dominicana",
+      "code": "DO",
+      "sources": {
+        "supervision": [
+          {
+            "name": "Superintendencia de Bancos",
+            "url": "https://www.sb.gob.do/",
+            "type": "website"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "IDECOOP",
+            "url": "https://www.idecoop.gob.do/",
+            "type": "website"
+          }
+        ],
+        "media": [
+          {
+            "name": "El Cooperador Digital",
+            "url": "https://elcooperadordigital.com/",
+            "type": "website",
+            "rss": "https://elcooperadordigital.com/feed/"
+          },
+          {
+            "name": "Cooperativismo Dominicano",
+            "url": "https://cooperativismodominicano.com/",
+            "type": "website"
+          },
+          {
+            "name": "Acento - CONACOOP",
+            "url": "https://acento.com.do/tags/?tag=conacoop",
+            "type": "website"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "Cooperativa La Altagracia",
+            "url": "https://www.coopaltagracia.com/",
+            "type": "website"
+          },
+          {
+            "name": "Cooperativa San Cristobal",
+            "url": "https://www.coopsancristobal.com/",
+            "type": "website"
+          }
+        ],
+        "government": [
+          {
+            "name": "Ministerio de Hacienda",
+            "url": "https://www.hacienda.gob.do/",
+            "type": "website"
+          },
+          {
+            "name": "Presidencia de la Republica",
+            "url": "https://presidencia.gob.do/",
+            "type": "website"
+          }
+        ]
+      }
+    }
+  ],
+  "latam_sources": [
+    {
+      "name": "COLAC - Confederacion Latinoamericana de Cooperativas",
+      "url": "https://www.colac.coop/",
+      "type": "website",
+      "rss": "https://www.colac.coop/feed/"
+    },
+    {
+      "name": "Alianza Cooperativa Internacional - Americas",
+      "url": "https://www.ica.coop/es",
+      "type": "website"
+    },
+    {
+      "name": "Cooperativas de las Americas",
+      "url": "https://aciamericas.coop/",
+      "type": "website"
+    }
+  ],
+  "settings": {
+    "min_news_per_country": 5,
+    "max_news_per_source": 3,
+    "days_back": 3,
+    "summary_length": "extended",
+    "max_history_days": 30,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "timeout": 30,
+    "max_retries": 3
+  }
+}
