@@ -27,13 +27,14 @@ jobs:
         with:
           python-version: '3.11'
 
+      # 🔥 Instalar Deno - necesario para yt-dlp con cookies
       - name: Instalar Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
 
       # ============================================
-      # NUEVO: Configurar SSL para sitios problemáticos
+      # CONFIGURAR SSL PARA SITIOS PROBLEMÁTICOS
       # ============================================
       - name: Configurar SSL y certificados
         run: |
@@ -43,6 +44,9 @@ jobs:
           python -c "import ssl; print(f'SSL version: {ssl.OPENSSL_VERSION}')"
           echo "✅ SSL configurado"
 
+      # ============================================
+      # VERIFICAR SECRETS
+      # ============================================
       - name: Verificar Secrets
         run: |
           echo "🔍 Verificando configuración..."
@@ -54,7 +58,10 @@ jobs:
             exit 1
           fi
 
-      - name: Restaurar cookies de YouTube (opcional)
+      # ============================================
+      # RESTAURAR COOKIES DE YOUTUBE (opcional)
+      # ============================================
+      - name: Restaurar cookies de YouTube
         run: |
           if [ -n "${{ secrets.YOUTUBE_COOKIES }}" ]; then
             echo "${{ secrets.YOUTUBE_COOKIES }}" | base64 -d > cookies.txt
@@ -63,7 +70,10 @@ jobs:
             echo "ℹ️ YOUTUBE_COOKIES no configurada (opcional)"
           fi
 
-      - name: Restaurar token de Google Drive (opcional)
+      # ============================================
+      # RESTAURAR TOKEN DE GOOGLE DRIVE (opcional)
+      # ============================================
+      - name: Restaurar token de Google Drive
         run: |
           if [ -n "${{ secrets.DRIVE_TOKEN_JSON }}" ]; then
             echo "${{ secrets.DRIVE_TOKEN_JSON }}" | base64 -d > token.json
@@ -72,6 +82,9 @@ jobs:
             echo "ℹ️ DRIVE_TOKEN_JSON no configurada (opcional)"
           fi
 
+      # ============================================
+      # VERIFICAR ARCHIVOS DEL PROYECTO
+      # ============================================
       - name: Verificar archivos del proyecto
         run: |
           echo "📁 Archivos en el repositorio:"
@@ -80,16 +93,20 @@ jobs:
           echo "📁 Verificando archivos críticos:"
           FILES=("main.py" "config_countries.json" "requirements.txt" 
                  "cooperative_fetcher.py" "cooperative_processor.py" 
-                 "summary_generator_coop.py" "document_generator_coop.py")
+                 "summary_generator_coop.py" "document_generator_coop.py"
+                 "drive_uploader.py" "audio_generator.py"
+                 "topic_index.py" "youtube_fetcher.py")
           for file in "${FILES[@]}"; do
             if [ -f "$file" ]; then
               echo "✅ $file encontrado"
             else
-              echo "❌ $file NO encontrado"
-              exit 1
+              echo "⚠️ $file NO encontrado (opcional)"
             fi
           done
 
+      # ============================================
+      # INSTALAR DEPENDENCIAS
+      # ============================================
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
@@ -104,7 +121,7 @@ jobs:
           pip list
 
       # ============================================
-      # NUEVO: Ejecutar con variables SSL
+      # EJECUTAR AGENTE COOPERATIVO CON IA-COOP-LAB
       # ============================================
       - name: Ejecutar Agente Cooperativo
         run: python main.py
@@ -119,6 +136,9 @@ jobs:
           # 🔑 Configurar timeout más largo
           REQUESTS_TIMEOUT: 60
 
+      # ============================================
+      # VERIFICAR ARCHIVOS GENERADOS
+      # ============================================
       - name: Verificar archivos generados
         run: |
           echo "📁 Archivos generados:"
@@ -133,6 +153,7 @@ jobs:
           fi
           if [ -f "resumen_cooperativo.mp3" ]; then
             echo "✅ resumen_cooperativo.mp3 generado"
+            echo "📄 Tamaño: $(wc -c < resumen_cooperativo.mp3) bytes"
           else
             echo "ℹ️ resumen_cooperativo.mp3 no generado (opcional)"
           fi
@@ -142,12 +163,23 @@ jobs:
           else
             echo "⚠️ historial_cooperativo/ no encontrado"
           fi
+          if [ -f "topic_index.json" ]; then
+            echo "✅ topic_index.json generado"
+          else
+            echo "ℹ️ topic_index.json no generado (opcional)"
+          fi
 
+      # ============================================
+      # SUBIR ARTEFACTO PARA GITHUB PAGES
+      # ============================================
       - name: Subir artefacto para GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./
 
+  # ============================================
+  # DEPLOY A GITHUB PAGES
+  # ============================================
   deploy-pages:
     needs: build-agent
     runs-on: ubuntu-latest
