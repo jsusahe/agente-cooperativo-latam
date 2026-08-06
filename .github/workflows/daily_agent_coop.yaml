@@ -18,6 +18,9 @@ jobs:
   build-agent:
     runs-on: ubuntu-latest
     
+    # 🔥 TIMEOUT DE 10 MINUTOS PARA EL JOB
+    timeout-minutes: 10
+    
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
@@ -27,14 +30,14 @@ jobs:
         with:
           python-version: '3.11'
 
-      # 🔥 Instalar Deno - necesario para yt-dlp con cookies
+      # 🔥 Instalar Deno - necesario para yt-dlp
       - name: Instalar Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
 
       # ============================================
-      # CONFIGURAR SSL PARA SITIOS PROBLEMÁTICOS
+      # CONFIGURAR SSL
       # ============================================
       - name: Configurar SSL y certificados
         run: |
@@ -54,12 +57,11 @@ jobs:
             echo "✅ DEEPSEEK_API_KEY configurada"
           else
             echo "❌ DEEPSEEK_API_KEY NO configurada"
-            echo "   ⚠️ El agente NO funcionará sin esta clave"
             exit 1
           fi
 
       # ============================================
-      # RESTAURAR COOKIES DE YOUTUBE (opcional)
+      # RESTAURAR COOKIES Y TOKENS
       # ============================================
       - name: Restaurar cookies de YouTube
         run: |
@@ -70,9 +72,6 @@ jobs:
             echo "ℹ️ YOUTUBE_COOKIES no configurada (opcional)"
           fi
 
-      # ============================================
-      # RESTAURAR TOKEN DE GOOGLE DRIVE (opcional)
-      # ============================================
       - name: Restaurar token de Google Drive
         run: |
           if [ -n "${{ secrets.DRIVE_TOKEN_JSON }}" ]; then
@@ -83,24 +82,21 @@ jobs:
           fi
 
       # ============================================
-      # VERIFICAR ARCHIVOS DEL PROYECTO
+      # VERIFICAR ARCHIVOS
       # ============================================
       - name: Verificar archivos del proyecto
         run: |
-          echo "📁 Archivos en el repositorio:"
-          ls -la
-          echo ""
           echo "📁 Verificando archivos críticos:"
           FILES=("main.py" "config_countries.json" "requirements.txt" 
                  "cooperative_fetcher.py" "cooperative_processor.py" 
                  "summary_generator_coop.py" "document_generator_coop.py"
-                 "drive_uploader.py" "audio_generator.py"
-                 "topic_index.py" "youtube_fetcher.py")
+                 "topic_index.py" "audio_generator.py")
           for file in "${FILES[@]}"; do
             if [ -f "$file" ]; then
               echo "✅ $file encontrado"
             else
-              echo "⚠️ $file NO encontrado (opcional)"
+              echo "❌ $file NO encontrado"
+              exit 1
             fi
           done
 
@@ -110,31 +106,26 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          if [ -f "requirements.txt" ]; then
-            pip install -r requirements.txt
-            echo "✅ Dependencias instaladas"
-          else
-            echo "❌ requirements.txt no encontrado"
-            exit 1
-          fi
-          echo "📦 Dependencias instaladas:"
-          pip list
+          pip install -r requirements.txt
+          echo "✅ Dependencias instaladas"
+          pip list | head -20
 
       # ============================================
-      # EJECUTAR AGENTE COOPERATIVO CON IA-COOP-LAB
+      # 🔥 EJECUTAR AGENTE CON TIMEOUT Y LOGS
       # ============================================
       - name: Ejecutar Agente Cooperativo
-        run: python main.py
+        run: |
+          echo "⏱️ Ejecutando agente con timeout de 8 minutos..."
+          timeout 480 python -u main.py 2>&1 | tee agent_output.log
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           PARENT_FOLDER_ID: ${{ secrets.PARENT_FOLDER_ID }}
           DRIVE_TOKEN_JSON: ${{ secrets.DRIVE_TOKEN_JSON }}
           YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
-          # 🔑 Deshabilitar verificación SSL para sitios problemáticos
           PYTHONHTTPSVERIFY: 0
-          # 🔑 Configurar timeout más largo
           REQUESTS_TIMEOUT: 60
+          PYTHONUNBUFFERED: 1
 
       # ============================================
       # VERIFICAR ARCHIVOS GENERADOS
@@ -154,32 +145,20 @@ jobs:
           if [ -f "resumen_cooperativo.mp3" ]; then
             echo "✅ resumen_cooperativo.mp3 generado"
             echo "📄 Tamaño: $(wc -c < resumen_cooperativo.mp3) bytes"
-          else
-            echo "ℹ️ resumen_cooperativo.mp3 no generado (opcional)"
           fi
           if [ -d "historial_cooperativo" ]; then
             echo "✅ historial_cooperativo/ creado"
             echo "📁 Contenido: $(ls -la historial_cooperativo/ | wc -l) archivos"
-          else
-            echo "⚠️ historial_cooperativo/ no encontrado"
-          fi
-          if [ -f "topic_index.json" ]; then
-            echo "✅ topic_index.json generado"
-          else
-            echo "ℹ️ topic_index.json no generado (opcional)"
           fi
 
       # ============================================
-      # SUBIR ARTEFACTO PARA GITHUB PAGES
+      # SUBIR ARTEFACTO
       # ============================================
       - name: Subir artefacto para GitHub Pages
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./
 
-  # ============================================
-  # DEPLOY A GITHUB PAGES
-  # ============================================
   deploy-pages:
     needs: build-agent
     runs-on: ubuntu-latest
