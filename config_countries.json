@@ -64,8 +64,8 @@
         ],
         "national_associations": [
           {
-            "name": "CONACOOP Panama",
-            "url": "https://conacoop.coop/",
+            "name": "CONALCOOP Panama",
+            "url": "https://www.instagram.com/conalcoop?igsh=a2poYWZ6MWcydW90",
             "type": "website"
           }
         ]
@@ -120,24 +120,13 @@
       "name": "Republica Dominicana",
       "code": "DO",
       "sources": {
-        "supervision": [
-          {
-            "name": "IDECOOP",
-            "url": "https://www.idecoop.gob.do/",
-            "type": "website"
-          }
-        ],
+       
         "media": [
           {
             "name": "El Cooperador Digital",
             "url": "https://elcooperadordigital.com/",
             "type": "website",
             "rss": "https://elcooperadordigital.com/feed/"
-          },
-          {
-            "name": "Cooperativismo Dominicano",
-            "url": "https://cooperativismodominicano.com/",
-            "type": "website"
           }
         ],
         "national_associations": [
@@ -179,6 +168,11 @@
     {
       "name": "OIBESCOOP",
       "url": "https://www.oibescoop.org/noticias/",
+      "type": "website"
+    };
+    {
+      "name": "ACI AMERICAS",
+      "url": "https://aciamericas.coop/",
       "type": "website"
     }
   ],
