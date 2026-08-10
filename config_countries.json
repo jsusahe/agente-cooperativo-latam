@@ -175,7 +175,7 @@
       "url": "https://aciamericas.coop/",
       "type": "website"
     }
-  ];
+  ],
   "settings": {
     "min_news_per_country": 2,
     "max_news_per_source": 1,
