@@ -87,10 +87,12 @@ jobs:
       - name: Verificar archivos del proyecto
         run: |
           echo "📁 Verificando archivos críticos:"
+          # 🔥 Agregamos pdf_loader.py a la lista
           FILES=("main.py" "config_countries.json" "requirements.txt" 
                  "cooperative_fetcher.py" "cooperative_processor.py" 
                  "summary_generator_coop.py" "document_generator_coop.py"
-                 "topic_index.py" "audio_generator.py" "drive_uploader.py")
+                 "topic_index.py" "audio_generator.py" "drive_uploader.py"
+                 "pdf_loader.py")
           for file in "${FILES[@]}"; do
             if [ -f "$file" ]; then
               echo "✅ $file encontrado"
