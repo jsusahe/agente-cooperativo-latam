@@ -1,0 +1,646 @@
+{
+  "countries": [
+    {
+      "name": "Colombia",
+      "code": "CO",
+      "sources": {
+        "supervision": [
+          {
+            "name": "Superintendencia de Economia Solidaria",
+            "url": "https://www.supersolidaria.gov.co/",
+            "type": "website",
+            "rss": "https://www.supersolidaria.gov.co/es/rss.xml"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "CONFECOOP (Confederación de Cooperativas de Colombia)",
+            "url": "https://confecoop.coop/",
+            "type": "website",
+            "rss": "https://confecoop.coop/feed/"
+          },
+          {
+            "name": "Confecoop YouTube",
+            "url": "https://www.youtube.com/@CONFECOOP1",
+            "type": "youtube"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "Grupo Coomeva (Coomeva Cooperativa)",
+            "url": "https://www.coomeva.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Coomeva YouTube",
+            "url": "https://www.youtube.com/user/GrupoCoomeva",
+            "type": "youtube"
+          },
+          {
+            "name": "Coomeva Facebook",
+            "url": "https://www.facebook.com/GrupoCoomeva",
+            "type": "facebook"
+          },
+          {
+            "name": "Cooperativa Colanta",
+            "url": "https://www.colanta.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Colanta Instagram",
+            "url": "https://www.instagram.com/colanta_oficial/",
+            "type": "instagram"
+          },
+          {
+            "name": "Colanta Facebook",
+            "url": "https://www.facebook.com/ColantaOficial/",
+            "type": "facebook"
+          },
+          {
+            "name": "Coosalud EPS",
+            "url": "https://www.coosalud.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Coosalud YouTube",
+            "url": "https://www.youtube.com/@Coosaludepss",
+            "type": "youtube"
+          },
+          {
+            "name": "Coosalud Instagram",
+            "url": "https://www.instagram.com/coosalud_eps/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coosalud Facebook",
+            "url": "https://www.facebook.com/CoosaludEPS/",
+            "type": "facebook"
+          },
+          {
+            "name": "Mutual Ser EPS",
+            "url": "https://www.mutualser.com/",
+            "type": "website"
+          },
+          {
+            "name": "Mutual Ser YouTube",
+            "url": "https://www.youtube.com/@mutualserepss",
+            "type": "youtube"
+          },
+          {
+            "name": "Mutual Ser Instagram",
+            "url": "https://www.instagram.com/mutualser/",
+            "type": "instagram"
+          },
+          {
+            "name": "Mutual Ser Facebook",
+            "url": "https://www.facebook.com/MutualSerEPS/",
+            "type": "facebook"
+          },
+          {
+            "name": "Coopidrogas",
+            "url": "https://www.coopidrogas.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Coopidrogas YouTube",
+            "url": "https://www.youtube.com/@Coopidrogas",
+            "type": "youtube"
+          },
+          {
+            "name": "Financiera Comultrasan",
+            "url": "https://www.financieracomultrasan.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Comultrasan YouTube",
+            "url": "https://www.youtube.com/channel/UCLMTIbqw8yz-NohF3zvR1Cg",
+            "type": "youtube"
+          },
+          {
+            "name": "Comultrasan Instagram",
+            "url": "https://www.instagram.com/financiera.comultrasan/",
+            "type": "instagram"
+          },
+          {
+            "name": "Comultrasan Facebook",
+            "url": "https://www.facebook.com/comultrasan",
+            "type": "facebook"
+          },
+          {
+            "name": "JFK Cooperativa Financiera",
+            "url": "https://www.jfk.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "JFK YouTube",
+            "url": "https://www.youtube.com/c/jfkcooperativafinanciera",
+            "type": "youtube"
+          },
+          {
+            "name": "JFK Instagram",
+            "url": "https://www.instagram.com/jfkcoopfinanciera/",
+            "type": "instagram"
+          },
+          {
+            "name": "JFK Facebook",
+            "url": "https://www.facebook.com/jfkcoopfinanciera",
+            "type": "facebook"
+          },
+          {
+            "name": "Confiar Cooperativa Financiera",
+            "url": "https://www.confiar.coop/",
+            "type": "website"
+          },
+          {
+            "name": "Confiar YouTube",
+            "url": "https://www.youtube.com/@ConfiarCooperativaFinanciera",
+            "type": "youtube"
+          },
+          {
+            "name": "Confiar Instagram",
+            "url": "https://www.instagram.com/confiarcoop/",
+            "type": "instagram"
+          },
+          {
+            "name": "Confiar Facebook",
+            "url": "https://www.facebook.com/ConfiarCooperativaFinanciera/",
+            "type": "facebook"
+          },
+          {
+            "name": "Cotrafa Cooperativa Financiera",
+            "url": "https://www.cotrafa.com.co/",
+            "type": "website"
+          },
+          {
+            "name": "Cotrafa YouTube",
+            "url": "https://www.youtube.com/@CotrafaCooperativaFinanciera",
+            "type": "youtube"
+          },
+          {
+            "name": "Cotrafa Instagram",
+            "url": "https://www.instagram.com/cotrafa/",
+            "type": "instagram"
+          },
+          {
+            "name": "Cotrafa Facebook",
+            "url": "https://www.facebook.com/cooperativa.financiera.cotrafa",
+            "type": "facebook"
+          },
+          {
+            "name": "CODEMA (Cooperativa del Magisterio)",
+            "url": "https://www.codema.coop/",
+            "type": "website"
+          },
+          {
+            "name": "CODEMA YouTube",
+            "url": "https://www.youtube.com/@COOMAGISTERIO",
+            "type": "youtube"
+          },
+          {
+            "name": "CODEMA TikTok",
+            "url": "https://www.tiktok.com/@codema.coop",
+            "type": "website"
+          },
+          {
+            "name": "Fincomercio",
+            "url": "https://www.fincomercio.com/",
+            "type": "website"
+          },
+          {
+            "name": "Fincomercio YouTube",
+            "url": "https://www.youtube.com/@fincomercio_coop",
+            "type": "youtube"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Panama",
+      "code": "PA",
+      "sources": {
+        "supervision": [
+          {
+            "name": "IPACOOP (Instituto Panameño Autónomo Cooperativo)",
+            "url": "https://ipacoop.gob.pa/",
+            "type": "website",
+            "rss": "https://ipacoop.gob.pa/feed/"
+          },
+          {
+            "name": "IPACOOP YouTube",
+            "url": "https://www.youtube.com/@ipacoopmultimedia",
+            "type": "youtube"
+          },
+          {
+            "name": "IPACOOP Instagram",
+            "url": "https://www.instagram.com/ipacoop_panama/",
+            "type": "instagram"
+          },
+          {
+            "name": "IPACOOP Facebook",
+            "url": "https://www.facebook.com/IPACOOP/",
+            "type": "facebook"
+          }
+        ],
+        "media": [
+          {
+            "name": "La Voz Cooperativa",
+            "url": "https://lavozcooperativa.com/",
+            "type": "website",
+            "rss": "https://lavozcooperativa.com/feed/"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "COOPEDUC, R.L. (El Educador)",
+            "url": "https://www.coopeduc.com/",
+            "type": "website"
+          },
+          {
+            "name": "COOPEDUC YouTube",
+            "url": "https://www.youtube.com/@Coopeduc1958",
+            "type": "youtube"
+          },
+          {
+            "name": "Cooperativa Profesionales, R.L.",
+            "url": "https://www.cooprofesionales.com.pa/",
+            "type": "website"
+          },
+          {
+            "name": "Cooprofesionales YouTube",
+            "url": "https://www.youtube.com/@cooperativaprofesionalesr.3288",
+            "type": "youtube"
+          },
+          {
+            "name": "COOPEVE, R.L. (El Educador Veragüense)",
+            "url": "https://www.coopeveenlinea.com/",
+            "type": "website"
+          },
+          {
+            "name": "COOPEVE YouTube",
+            "url": "https://www.youtube.com/@CoopeveR.L.Panamá",
+            "type": "youtube"
+          },
+          {
+            "name": "COOPEVE Instagram",
+            "url": "https://www.instagram.com/coopeverl/",
+            "type": "instagram"
+          },
+          {
+            "name": "COOPEVE Facebook",
+            "url": "https://www.facebook.com/CoopeveRL/",
+            "type": "facebook"
+          },
+          {
+            "name": "CACSA (San Antonio)",
+            "url": "https://www.cacsa.com.pa/",
+            "type": "website"
+          },
+          {
+            "name": "COOESAN (El Educador Santeño)",
+            "url": "https://www.cooesan.com/",
+            "type": "website"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Costa Rica",
+      "code": "CR",
+      "sources": {
+        "supervision": [
+          {
+            "name": "INFOCOOP (Instituto de Fomento Cooperativo)",
+            "url": "https://www.infocoop.go.cr/",
+            "type": "website",
+            "rss": "https://www.infocoop.go.cr/feed/"
+          },
+          {
+            "name": "INFOCOOP YouTube",
+            "url": "https://www.youtube.com/@Infocoop_CostaRica1",
+            "type": "youtube"
+          },
+          {
+            "name": "INFOCOOP Facebook",
+            "url": "https://www.facebook.com/infocoop",
+            "type": "facebook"
+          },
+          {
+            "name": "SUGEF",
+            "url": "https://www.sugef.fi.cr/",
+            "type": "website"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "CONACOOP Costa Rica",
+            "url": "https://conacoop.coop/",
+            "type": "website"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "Coopenae",
+            "url": "https://www.coopenae.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "Coopenae YouTube",
+            "url": "https://www.youtube.com/@CoopenaeCooperativa",
+            "type": "youtube"
+          },
+          {
+            "name": "Coopenae Instagram",
+            "url": "https://www.instagram.com/coopenaecr/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coopealianza R.L.",
+            "url": "https://www.coopealianza.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "Coopealianza YouTube",
+            "url": "https://www.youtube.com/user/COOPEALIANZA",
+            "type": "youtube"
+          },
+          {
+            "name": "Coopealianza Instagram",
+            "url": "https://www.instagram.com/coopealianza/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coopealianza Facebook",
+            "url": "https://www.facebook.com/coopealianza/",
+            "type": "facebook"
+          },
+          {
+            "name": "Coope Ande N.º 1",
+            "url": "https://www.coopeande1.com/",
+            "type": "website"
+          },
+          {
+            "name": "Coope Ande Instagram",
+            "url": "https://www.instagram.com/coopeandecr/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coope Ande Facebook",
+            "url": "https://www.facebook.com/coopeandecr/",
+            "type": "facebook"
+          },
+          {
+            "name": "Coocique R.L.",
+            "url": "https://www.coocique.com/",
+            "type": "website"
+          },
+          {
+            "name": "Coocique Instagram",
+            "url": "https://www.instagram.com/coociquecr/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coocique Facebook",
+            "url": "https://www.facebook.com/coocique",
+            "type": "facebook"
+          },
+          {
+            "name": "Coopeservidores (CS Ahorro y Crédito)",
+            "url": "https://www.coopeservidores.fi.cr/",
+            "type": "website"
+          },
+          {
+            "name": "Coopeservidores YouTube",
+            "url": "https://www.youtube.com/@Coopeservidores",
+            "type": "youtube"
+          },
+          {
+            "name": "Coopeservidores Instagram",
+            "url": "https://www.instagram.com/coopeservidores/",
+            "type": "instagram"
+          },
+          {
+            "name": "Coopeservidores Facebook",
+            "url": "https://www.facebook.com/Coopeservidores/",
+            "type": "facebook"
+          },
+          {
+            "name": "Dos Pinos (COOPROLE R.L.)",
+            "url": "https://www.dospinos.com/",
+            "type": "website"
+          },
+          {
+            "name": "Dos Pinos YouTube",
+            "url": "https://www.youtube.com/@DosPinosOficial",
+            "type": "youtube"
+          },
+          {
+            "name": "Dos Pinos Instagram",
+            "url": "https://www.instagram.com/dospinos/",
+            "type": "instagram"
+          },
+          {
+            "name": "Dos Pinos Facebook",
+            "url": "https://www.facebook.com/DosPinosOficial/",
+            "type": "facebook"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Republica Dominicana",
+      "code": "DO",
+      "sources": {
+        "supervision": [
+          {
+            "name": "IDECOOP (Instituto de Desarrollo y Crédito Cooperativo)",
+            "url": "https://www.idecoop.gob.do/",
+            "type": "website"
+          },
+          {
+            "name": "IDECOOP Instagram",
+            "url": "https://www.instagram.com/idecoop/",
+            "type": "instagram"
+          },
+          {
+            "name": "IDECOOP Facebook",
+            "url": "https://www.facebook.com/idecoopRD",
+            "type": "facebook"
+          },
+          {
+            "name": "IDECOOP YouTube",
+            "url": "https://www.youtube.com/@idecooprd",
+            "type": "youtube"
+          },
+          {
+            "name": "Superintendencia de Bancos",
+            "url": "https://www.sb.gob.do/",
+            "type": "website"
+          }
+        ],
+        "national_associations": [
+          {
+            "name": "CONACOOP (Consejo Nacional de Cooperativas)",
+            "url": "https://www.conacoop.com.do/",
+            "type": "website"
+          },
+          {
+            "name": "AIRAC (Asociación de Instituciones Rurales de AC)",
+            "url": "https://airac.org.do/",
+            "type": "website"
+          }
+        ],
+        "media": [
+          {
+            "name": "El Cooperador Digital",
+            "url": "https://elcooperadordigital.com/",
+            "type": "website",
+            "rss": "https://elcooperadordigital.com/feed/"
+          },
+          {
+            "name": "COOPTVRD",
+            "url": "https://www.youtube.com/@COOPTVRD1",
+            "type": "youtube"
+          },
+          {
+            "name": "CoopCast (Podcast)",
+            "url": "https://www.youtube.com/@CoopCastRD",
+            "type": "youtube"
+          }
+        ],
+        "cooperatives": [
+          {
+            "name": "COOPNAMA (Nacional de Maestros)",
+            "url": "https://www.coopnama.coop/",
+            "type": "website"
+          },
+          {
+            "name": "COOPNAMA YouTube",
+            "url": "https://www.youtube.com/@cooperativanacionaldemaestros",
+            "type": "youtube"
+          },
+          {
+            "name": "COOPNAMA Instagram",
+            "url": "https://www.instagram.com/coopnama/",
+            "type": "instagram"
+          },
+          {
+            "name": "Cooperativa San José (COOPSANJOSE)",
+            "url": "https://www.coopsanjose.com.do/",
+            "type": "website"
+          },
+          {
+            "name": "COOPSANJOSE YouTube",
+            "url": "https://www.youtube.com/@CoopSanJoseRD",
+            "type": "youtube"
+          },
+          {
+            "name": "COOPSANJOSE Instagram",
+            "url": "https://www.instagram.com/coopsanjose/",
+            "type": "instagram"
+          },
+          {
+            "name": "COOPSANJOSE Facebook",
+            "url": "https://www.facebook.com/coopsanjose/",
+            "type": "facebook"
+          },
+          {
+            "name": "COOPMAIMÓN",
+            "url": "https://www.coopmaimon.com/",
+            "type": "website"
+          },
+          {
+            "name": "COOPMAIMÓN Instagram",
+            "url": "https://www.instagram.com/coopmaimon/",
+            "type": "instagram"
+          },
+          {
+            "name": "COOPMAIMÓN Facebook",
+            "url": "https://www.facebook.com/coopmaimon/",
+            "type": "facebook"
+          },
+          {
+            "name": "COOPMEDICA",
+            "url": "https://www.coopmedica.com/",
+            "type": "website"
+          },
+          {
+            "name": "COOPMEDICA Instagram",
+            "url": "https://www.instagram.com/coopmedica/",
+            "type": "instagram"
+          },
+          {
+            "name": "COOPMEDICA Facebook",
+            "url": "https://www.facebook.com/coopmedica/",
+            "type": "facebook"
+          },
+          {
+            "name": "Cooperativa Vega Real (CVR)",
+            "url": "https://www.cvr.com.do/",
+            "type": "website"
+          },
+          {
+            "name": "CVR YouTube",
+            "url": "https://www.youtube.com/@CooperativaVegaReal",
+            "type": "youtube"
+          },
+          {
+            "name": "CVR Instagram",
+            "url": "https://www.instagram.com/coopvegareal/",
+            "type": "instagram"
+          },
+          {
+            "name": "CVR Facebook",
+            "url": "https://www.facebook.com/coopvegareal/",
+            "type": "facebook"
+          },
+          {
+            "name": "COOPBUENO (Momón Bueno)",
+            "url": "https://www.coopbueno.com.do/",
+            "type": "website"
+          },
+          {
+            "name": "COOPACRENE",
+            "url": "https://www.coopacrene.com/",
+            "type": "website"
+          },
+          {
+            "name": "COOPACRENE (FENCOOP)",
+            "url": "https://coopacrene.fencoop.org.do/",
+            "type": "website"
+          }
+        ]
+      }
+    }
+  ],
+  "latam_sources": [
+    {
+      "name": "COLAC",
+      "url": "https://www.colac.coop/",
+      "type": "website",
+      "rss": "https://www.colac.coop/feed/"
+    },
+    {
+      "name": "OIBESCOOP",
+      "url": "https://www.oibescoop.org/noticias/",
+      "type": "website"
+    },
+    {
+      "name": "Cooperativas de las Américas (ACI)",
+      "url": "https://www.ciamericas.coop/",
+      "type": "website"
+    },
+    {
+      "name": "ACI Américas YouTube",
+      "url": "https://www.youtube.com/@cooperativasamericas",
+      "type": "youtube"
+    }
+  ],
+  "settings": {
+    "min_news_per_country": 3,
+    "max_news_per_source": 1,
+    "days_back": 7,
+    "max_history_days": 30,
+    "timeout": 10,
+    "max_retries": 1
+  }
+}
