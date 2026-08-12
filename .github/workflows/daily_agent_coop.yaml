@@ -87,7 +87,7 @@ jobs:
       - name: Verificar archivos del proyecto
         run: |
           echo "📁 Verificando archivos críticos:"
-          # 🔥 Agregamos pdf_loader.py a la lista
+          # 🔥 Agregamos pdf_loader.py a la lista (ya lo tenías)
           FILES=("main.py" "config_countries.json" "requirements.txt" 
                  "cooperative_fetcher.py" "cooperative_processor.py" 
                  "summary_generator_coop.py" "document_generator_coop.py"
@@ -125,6 +125,8 @@ jobs:
           PARENT_FOLDER_ID: ${{ secrets.PARENT_FOLDER_ID }}
           DRIVE_TOKEN_JSON: ${{ secrets.DRIVE_TOKEN_JSON }}
           YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          # 🔥 NUEVO: Token para Facebook e Instagram (obligatorio para redes sociales)
+          FACEBOOK_ACCESS_TOKEN: ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
           PYTHONHTTPSVERIFY: 0
           REQUESTS_TIMEOUT: 60
           PYTHONUNBUFFERED: 1
